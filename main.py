@@ -30,13 +30,14 @@ def openBrowser():
     capabilities = webdriver.DesiredCapabilities.CHROME
     proxy.add_to_capabilities(capabilities)
 
+    
     driver = webdriver.Chrome('D:\selenium\chromedriver.exe' , desired_capabilities = capabilities)
 
-    driver.get('http://telnetmyip.com/')
+    driver.get('https://whatismyipaddress.com/')
 
     time.sleep(5)
 
-    #driver.quit()
+    driver.quit()
 
 def autoAssignProxies():
    # r = requests.get(url)
@@ -48,15 +49,16 @@ def autoAssignProxies():
    source = requests.get(url).json()
    for line in source:
     ProxyListWithoutClean = line.split(",")
+    for i in ProxyListWithoutClean:
+        cleanProxy = i.replace("[","")
+        cleanProxy = i.replace("]","")
+        cleanProxy = i.replace("'","")
+        asocksip = cleanProxy
 
-   for i in ProxyListWithoutClean:
-    cleanProxy = i.replace("[","")
-    cleanProxy = i.replace("]","")
-    cleanProxy = i.replace("'","")
-    asocksip = cleanProxy
 
+        print (asocksip)
+        openBrowser()
 
-    print (cleanProxy)
-    openBrowser()
-
-autoAssignProxies()
+   
+while(1):
+    autoAssignProxies()
